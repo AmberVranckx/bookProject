@@ -26,20 +26,10 @@ public class BookController {
         return bookService.createBook(bookRequest);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Book> updateBook(@RequestBody Book updateBook, @PathVariable("id") long bookId){
-//        Optional<Book> book = bookRepository.findById(bookId);
-//        if (book.isPresent()){
-//            Book newBook = book.get();
-//            newBook.setDescription(updateBook.getDescription());
-//            newBook.setIsbn(updateBook.getIsbn());
-//            newBook.setAuthor(updateBook.getAuthor());
-//            newBook.setName(updateBook.getName());
-//            bookRepository.save(newBook);
-//            return new ResponseEntity<>(newBook, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Book> updateBook(@RequestBody BookRequest bookRequestUpdate, @PathVariable("id") long bookId){
+        return bookService.updateBook(bookRequestUpdate, bookId);
+    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
