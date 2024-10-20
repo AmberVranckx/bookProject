@@ -1,19 +1,17 @@
-package fact.it.userservice.model;
+package fact.it.userservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(value = "user")
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-public class User {
+public class UserResponse {
     private String id;
     private String firstname;
     private String lastname;
