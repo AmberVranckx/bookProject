@@ -25,10 +25,10 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/product-service:latest ./product-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/book-service:latest ./book-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/product-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/book-service:latest
   userservice:
     runs-on: ubuntu-latest
     name: Java 17 build, test, deliver user-service container
@@ -51,10 +51,10 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/inventory-service:latest ./inventory-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/user-service:latest ./user-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/inventory-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/user-service:latest
   readinglistservice:
     runs-on: ubuntu-latest
     name: Java 17 build, test, deliver readinglist-service container
@@ -77,7 +77,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/order-service:latest ./order-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/readinglist-service:latest ./readinglist-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/order-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/readinglist-service:latest
