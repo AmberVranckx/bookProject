@@ -21,42 +21,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional
 public class ReadingListService {
+
+    //Link with repository
     private final ReadingListRepository readingListRepository;
+
+    //Link with webclient to make HTTP requests
     private final WebClient webClient;
 
+    //Url from bookservice via application properties
     @Value("${bookservice.baseurl}")
     private String bookServiceBaseUrl;
 
+
+    //Url from userservice via application properties
     @Value("${userservice.baseurl}")
     private String userServiceBaseUrl;
 
+
+    //Get all readinglists
     public List<ReadingListResponse> getAllReadingLists(){
+        //Get all readinglists from repository
         List<ReadingList> readingLists = readingListRepository.findAll();
 
-
-//        return readingLists.stream()
-//                .map(readingList -> new ReadingListResponse(
-//                        readingList.getReadingListNumber(),
-//                        mapToReadingListLineDto(readingList.getReadingListLine())
-//                ))
-//                .collect(Collectors.toList());
-
-
+        //Get all unique bookIds
         List<Long> bookIds = readingLists.stream()
                 .flatMap(readingList -> readingList.getReadingListLine().stream()
-                        .peek(readingListLine -> System.out.println("ReadingListLine: " + readingListLine))
+//                        .peek(readingListLine -> System.out.println("ReadingListLine: " + readingListLine))
                         .map(ReadingListLine::getBookId))
                 .distinct()
                 .collect(Collectors.toList());
 
+        //Get all unique userIds
         List<String> userIds = readingLists.stream()
-                .flatMap(readingList -> readingList.getReadingListLine().stream()
-                        .peek(readingListLine -> System.out.println("ReadingListLine: " + readingListLine))
-                        .map(ReadingListLine::getUserId))
+                .map(ReadingList::getUserId)
                 .distinct()
                 .collect(Collectors.toList());
 
 
+        //Get all details from the bookservice via bookIds
         BookResponse[] bookResponseArray = webClient.get()
                 .uri("http://" + bookServiceBaseUrl + "/api/book",
                         uriBuilder -> uriBuilder.queryParam("BookId", bookIds).build())
@@ -64,6 +66,7 @@ public class ReadingListService {
                 .bodyToMono(BookResponse[].class)
                 .block();
 
+        //Get all details from the userservice via userIds
         UserResponse[] userResponseArray = webClient.get()
                 .uri("http://" + userServiceBaseUrl + "/api/user",
                         uriBuilder -> uriBuilder.queryParam("UserId", userIds).build())
@@ -71,36 +74,39 @@ public class ReadingListService {
                 .bodyToMono(UserResponse[].class)
                 .block();
 
-
+        //Response
         return readingLists.stream()
                 .map(readingList -> {
+                    //Map each readinglist to readinglistdto
                     List<ReadingListLineDto> readingListLineDtos = readingList.getReadingListLine().stream()
                             .map(readingListLine -> {
+                                //Find details for given bookId
                                 BookResponse book = Arrays.stream(bookResponseArray)
                                         .filter(b -> b.getId().equals(readingListLine.getBookId()))
                                         .findFirst()
                                         .orElse(null);
 
-                                UserResponse user = Arrays.stream(userResponseArray)
-                                        .filter(u -> u.getId().equals(readingListLine.getUserId()))
-                                        .findFirst()
-                                        .orElse(null);
-
-                                System.out.println("ReadingListLine Book ID: " + readingListLine.getBookId());
-                                System.out.println("ReadingListLine User ID: " + readingListLine.getUserId());
-
+                                //Make dto for each readinglistline
                                 return new ReadingListLineDto(
                                         readingListLine.getId(),
                                         readingListLine.getRating(),
                                         readingListLine.getFeedback(),
                                         book != null ? book.getName() : null,
-                                        user != null ? (user.getFirstname() + " " + user.getLastname()) : null,
-                                        readingListLine.getBookId(),
-                                        readingListLine.getUserId());
+                                        readingListLine.getBookId());
                             })
                             .collect(Collectors.toList());
+
+                    //Find details for given userId
+                    UserResponse user = Arrays.stream(userResponseArray)
+                            .filter(u -> u.getId().equals(readingList.getUserId()))
+                            .findFirst()
+                            .orElse(null);
+
+                    //Return readinglistresponse
                     return new ReadingListResponse(
                             readingList.getReadingListNumber(),
+                            readingList.getUserId(),
+                            user != null ? user.getFirstname() +  " " + user.getLastname() : "Unknown",
                             readingListLineDtos
                     );
                 })
@@ -110,10 +116,16 @@ public class ReadingListService {
 
     }
 
+    //Create new readinglist
     public boolean createReadingList(ReadingListRequest readingListRequest){
+        //Create new readinglist object
         ReadingList readingList = new ReadingList();
+        //Set new readinglistnumber
         readingList.setReadingListNumber(UUID.randomUUID().toString());
+        //Set userId from request
+        readingList.setUserId(readingListRequest.getUserId());
 
+        //Map readinglistlinedto to readinglistline
         List<ReadingListLine> readingListLines = readingListRequest.getReadingListLineDto()
                 .stream()
                 .map(this::mapToReadingListLine)
@@ -121,14 +133,12 @@ public class ReadingListService {
 
         readingList.setReadingListLine(readingListLines);
 
+        //Get all bookIds from readinglistlines
         List<Long> bookIds = readingList.getReadingListLine().stream()
                 .map(ReadingListLine::getBookId)
                 .toList();
 
-        List<String> userIds = readingList.getReadingListLine().stream()
-                .map(ReadingListLine::getUserId)
-                .toList();
-
+        //Get details from bookservice via bookIds
         BookResponse[] bookResponseArray = webClient.get()
                 .uri("http://" + bookServiceBaseUrl + "/api/book",
                         uriBuilder -> uriBuilder.queryParam("bookId", bookIds).build())
@@ -136,13 +146,7 @@ public class ReadingListService {
                 .bodyToMono(BookResponse[].class)
                 .block();
 
-        UserResponse[] userResponseArray = webClient.get()
-                .uri("http://" + userServiceBaseUrl + "/api/user",
-                        uriBuilder -> uriBuilder.queryParam("userId", userIds).build())
-                .retrieve()
-                .bodyToMono(UserResponse[].class)
-                .block();
-
+        //Map book details for each readinglistline
         readingList.getReadingListLine().stream()
                 .map(readingListLine -> {
                     BookResponse book = Arrays.stream(bookResponseArray)
@@ -156,28 +160,18 @@ public class ReadingListService {
                 })
                 .collect(Collectors.toList());
 
+        //Save new readinglist
         readingListRepository.save(readingList);
+        //readinglist was succesfully created
         return true;
     }
 
-//    private List<ReadingListLineDto> mapToReadingListLineDto(List<ReadingListLine> readingListLines, Map<Long, String> bookNames, Map<Long, String> usernames){
-//        return readingListLines.stream()
-//                .map(readingListLine -> new ReadingListLineDto(
-//                        readingListLine.getId(),
-//                        readingListLine.getRating(),
-//                        readingListLine.getFeedback(),
-//                        readingListLine.getBookId(),
-//                        readingListLine.getUserId()
-//                ))
-//                .collect(Collectors.toList());
-//    }
-
+    //Method to map readinglistlinedto to readinglistline
     private ReadingListLine mapToReadingListLine(ReadingListLineDto readingListLineDto){
         ReadingListLine readingListLine = new ReadingListLine();
         readingListLine.setFeedback(readingListLineDto.getFeedback());
         readingListLine.setRating(readingListLineDto.getRating());
         readingListLine.setBookId(readingListLineDto.getBookId());
-        readingListLine.setUserId(readingListLineDto.getUserId());
         return readingListLine;
     }
 }

@@ -19,6 +19,7 @@ public class ReadingList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String readingListNumber;
+    private String userId;
     @OneToMany(cascade = CascadeType.ALL)
     private List<ReadingListLine> readingListLine;
 

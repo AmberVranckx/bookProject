@@ -15,6 +15,7 @@ import java.util.List;
 public class ReadingListController {
     private final ReadingListService readingListService;
 
+    //Post new book
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public String createReadingList(@RequestBody ReadingListRequest readinglistRequest){
@@ -22,6 +23,7 @@ public class ReadingListController {
         return (result ? "Nieuwe leeslijst toegevoegd" : "Leeslijst toevoegen gefaald");
     }
 
+    //Get all readinglists
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ReadingListResponse> getAllReadinglists(){

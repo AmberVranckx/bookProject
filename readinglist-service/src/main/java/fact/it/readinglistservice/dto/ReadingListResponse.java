@@ -9,7 +9,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//Response to a request
 public class ReadingListResponse {
     private String readingListNumber;
+    private String userId;
+    private String username;
     private List<ReadingListLineDto> readingListLines;
 }
