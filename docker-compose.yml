@@ -1,0 +1,74 @@
+services:
+ mongo-users:
+  image: mongo:latest
+  ports:
+    - 27017:27017
+  volumes:
+    - mongodb_user_data:/data/db
+    
+ mysql-books:
+  image: mysql:latest
+  ports:
+    - 3307:3306
+  volumes:
+    - mysql_book_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+    
+ mysql-readinglist:
+  image: mysql:latest
+  ports:
+    - 3308:3306
+  volumes:
+    - mysql_readinglist_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+    
+ user-service:
+  depends_on:
+    - mongo-users
+  image: ambervranckx/user-service
+  ports:
+    - 8080:8080
+  links:
+    - mongo-users
+  environment:
+   MONGODB_PORT: 27017
+   MONGODB_HOST: mongo-users
+   
+ book-service:
+  depends_on:
+    - mysql-books
+  image: ambervranckx/book-service
+  ports:
+    - 8082:8082
+  links:
+    - mysql-books
+  environment:
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-books
+   MYSQL_DB_PORT: 3306
+
+ readinglist-service:
+  depends_on:
+    - user-service
+    - book-service
+  image: ambervranckx/readinglist-service
+  ports:
+    - 8081:8081
+  links:
+    - user-service
+    - book-service
+  environment:
+   BOOK_SERVICE_BASEURL: book-service:8082
+   USER_SERVICE_BASEURL: user-service:8080
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-readinglist
+   MYSQL_DB_PORT: 3306
+
+volumes:
+ mongodb_user_data:
+ mysql_book_data:
+ mysql_readinglist_data:
