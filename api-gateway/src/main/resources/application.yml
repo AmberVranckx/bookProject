@@ -8,60 +8,50 @@ logging:
     org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
     reactor.netty: TRACE
 
-
 spring:
   cloud:
     gateway:
       routes:
-        #Book-service
-        #GET
         - id: book-service-get
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/books
             - Method=GET
           filters:
-            - SetPath= /api/book
+            - SetPath=/api/book
 
-        #POST
         - id: book-service-post
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/books
             - Method=POST
           filters:
-            - SetPath= /api/book
+            - SetPath=/api/book
 
-        #PUT
         - id: book-service-put
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/books
             - Method=PUT
           filters:
-            - SetPath= /api/book/{id}
+            - SetPath=/api/book/{id}
 
-        #User-service
-        #GET
         - id: user-service-get
           uri: http://${USER_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path= /users
+            - Path=/users
             - Method=GET
           filters:
             - SetPath=/api/user
 
-        #POST
         - id: user-service-post
           uri: http://${USER_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path= /users
+            - Path=/users
             - Method=POST
           filters:
             - SetPath=/api/user
 
-        #Readinglist-service
-        #GET
         - id: readinglist-service-get
           uri: http://${READINGLIST_SERVICE_BASEURL:localhost:8081}
           predicates:
@@ -70,11 +60,10 @@ spring:
           filters:
             - SetPath=/api/readinglist
 
-        #POST
         - id: readinglist-service-post
           uri: http://${READINGLIST_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/readinglists
-            - Method=GET
+            - Method=POST
           filters:
             - SetPath=/api/readinglist
