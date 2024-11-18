@@ -69,22 +69,23 @@ services:
    MYSQL_DB_PORT: 3306
 
 
-   api-gateway:
-    depends_on:
-      - user-service
-      - book-service
-      - readinglist-service
-    image: ambervranckx/api-gateway
-    ports:
-      - 8083:8083
-    links:
-      - user-service
-      - book-service
-      - readinglist-service
-    environment:
-    BOOK_SERVICE_BASEURL: book-service:8082
-    USER_SERVICE_BASEURL: user-service:8080
-    READINGLIST_SERVICE_BASEURL: readinglist-service:8081
+
+ api-gateway:
+  depends_on:
+     - user-service
+     - book-service
+     - readinglist-service
+  image: ambervranckx/api-gateway
+  ports:
+    - 8083:8083
+  links:
+    - user-service
+    - book-service
+    - readinglist-service
+  environment:
+     BOOK_SERVICE_BASEURL: book-service:8082
+     USER_SERVICE_BASEURL: user-service:8080
+     READINGLIST_SERVICE_BASEURL: readinglist-service:8081
 
 volumes:
  mongodb_user_data:
