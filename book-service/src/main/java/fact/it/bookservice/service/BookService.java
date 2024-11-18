@@ -50,6 +50,10 @@ public class BookService {
         return books.stream().map(this::mapToBookResponse).toList();
     }
 
+    public void deleteBook(long bookId){
+        bookRepository.deleteById(bookId);
+    }
+
     private BookResponse mapToBookResponse(Book book){
         return BookResponse.builder()
                 .id(book.getId())

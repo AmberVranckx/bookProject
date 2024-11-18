@@ -36,4 +36,10 @@ public class BookController {
     public List<BookResponse> getAllBooks(){
         return bookService.getAllBooks();
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteBook(@PathVariable("id") long bookId) {
+         bookService.deleteBook(bookId);
+    }
 }

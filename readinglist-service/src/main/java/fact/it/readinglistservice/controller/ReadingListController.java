@@ -2,8 +2,10 @@ package fact.it.readinglistservice.controller;
 
 import fact.it.readinglistservice.dto.ReadingListRequest;
 import fact.it.readinglistservice.dto.ReadingListResponse;
+import fact.it.readinglistservice.model.ReadingList;
 import fact.it.readinglistservice.service.ReadingListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.convert.PeriodUnit;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,4 +31,5 @@ public class ReadingListController {
     public List<ReadingListResponse> getAllReadinglists(){
         return readingListService.getAllReadingLists();
     }
+
 }
