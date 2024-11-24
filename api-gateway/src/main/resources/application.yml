@@ -36,6 +36,14 @@ spring:
           filters:
             - SetPath=/api/book/{id}
 
+        - id: book-service-delete
+          uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/books/{id}
+            - Method=DELETE
+          filters:
+            - SetPath=/api/book/{id}
+
         - id: user-service-get
           uri: http://${USER_SERVICE_BASEURL:localhost:8080}
           predicates:
