@@ -28,6 +28,7 @@ services:
   depends_on:
     - mongo-users
   image: ambervranckx/user-service
+  pull_policy: always
   ports:
     - 8080:8080
   links:
@@ -40,6 +41,7 @@ services:
   depends_on:
     - mysql-books
   image: ambervranckx/book-service
+  pull_policy: always
   ports:
     - 8082:8082
   links:
@@ -55,6 +57,7 @@ services:
     - user-service
     - book-service
   image: ambervranckx/readinglist-service
+  pull_policy: always
   ports:
     - 8081:8081
   links:
@@ -76,6 +79,7 @@ services:
      - book-service
      - readinglist-service
   image: ambervranckx/api-gateway
+  pull_policy: always
   ports:
     - 8083:8083
   links:

@@ -31,7 +31,7 @@ spring:
         - id: book-service-put
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/books
+            - Path=/books/{id}
             - Method=PUT
           filters:
             - SetPath=/api/book/{id}
