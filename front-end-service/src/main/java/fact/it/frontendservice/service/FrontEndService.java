@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class FrontEndService {
-    @Value("${api.gateway.url")
+    @Value("${api.gateway.url}")
     private String apiGatewayUrl;
     private final WebClient.Builder webClientBuilder;
     private final OAuth2AuthorizedClientService authorizedClientService;
