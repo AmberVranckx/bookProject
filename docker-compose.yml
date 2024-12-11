@@ -93,7 +93,7 @@ services:
 
  front-end-service:
   depends_on:
-    -api-gateway
+    - api-gateway
   image: ambervranckx/front-end-service
   pull_policy: always
   ports:
