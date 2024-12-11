@@ -125,7 +125,7 @@ jobs:
           distribution: adopt
 
       - name: Build, test and package project
-        working-directory: ./frontend-service
+        working-directory: ./front-end-service
         run: mvn package -B
 
       - name: Docker login
