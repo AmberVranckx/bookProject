@@ -1,6 +1,7 @@
 package fact.it.frontendservice.service;
 
 import fact.it.frontendservice.model.Book;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Service
 public class FrontEndService {
+    @Value("${api.gateway.url")
+    private String apiGatewayUrl;
     private final WebClient.Builder webClientBuilder;
     private final OAuth2AuthorizedClientService authorizedClientService;
 
@@ -24,7 +27,7 @@ public class FrontEndService {
     public List<Book> getBooks(){
         return webClientBuilder.build()
                 .get()
-                .uri("http://localhost:8083/books")
+                .uri(apiGatewayUrl + "/books")
                 .retrieve()
                 .bodyToFlux(Book.class)
                 .collectList()
@@ -39,7 +42,7 @@ public class FrontEndService {
         System.out.println("Using token: " + token);
         return webClientBuilder.build()
                 .post()
-                .uri("http://localhost:8083/books")
+                .uri(apiGatewayUrl + "books")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(book)
                 .retrieve()
