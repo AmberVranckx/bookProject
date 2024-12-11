@@ -11,12 +11,12 @@ logging:
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_CLIENTID}
-            client-secret: ${GOOGLE_CLIENTSECRET}
-            scope: openid,profile,email
+#      client:
+#        registration:
+#          google:
+#            client-id: ${GOOGLE_CLIENTID}
+#            client-secret: ${GOOGLE_CLIENTSECRET}
+#            scope: openid,profile,email
       resourceserver:
         jwt:
           issuer-uri: https://accounts.google.com
@@ -24,6 +24,14 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: frontend-service
+          uri: http://${FRONTEND_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/frontend/**
+          filters:
+            - RewritePath=/frontend/(?<path>.*), /${path}
+
+
         - id: book-service-get
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
           predicates:
@@ -39,6 +47,7 @@ spring:
             - Method=POST
           filters:
             - SetPath=/api/book
+            - RemoveRequestHeader=Cookie
 
         - id: book-service-put
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}

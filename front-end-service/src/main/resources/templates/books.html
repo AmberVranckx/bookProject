@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Boekenlijst</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="/books">Boeken</a></li>
+        <li>Gebruikers</li>
+        <li>Leeslijsten</li>
+        <li>Profiel</li>
+    </ul>
+</nav>
+    <h1>Boekenlijst</h1>
+<p><a href="/newBook">Nieuwe Boek</a></p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ISBN Nr.</th>
+                <th>Naam</th>
+                <th>Beschrijving</th>
+                <th>Auteur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.getIsbn()}"></td>
+                <td th:text="${book.getName()}"></td>
+                <td th:text="${book.getDescription()}"></td>
+                <td th:text="${book.getAuthor()}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

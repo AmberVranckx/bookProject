@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Nieuwe boek toevoegen</title>
+</head>
+<body>
+<h1>Nieuwe boek toevoegen</h1>
+
+<form action="/createNewBook" method="post">
+    <p>
+        <label for="isbn">ISBN Nr.:</label>
+        <input type="text" id="isbn" name="isbn">
+    </p>
+    <p>
+        <label for="name">Naam:</label>
+        <input type="text" id="name" name="name">
+    </p>
+    <p>
+        <label for="author">Auteur:</label>
+        <input type="text" id="author" name="author">
+    </p>
+    <p>
+        <label for="description">Beschrijving:</label>
+        <input type="text" id="description" name="description">
+    </p>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <input type="submit" value="Toevoegen">
+
+</form>
+</body>
+</html>
