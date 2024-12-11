@@ -91,6 +91,18 @@ services:
      USER_SERVICE_BASEURL: user-service:8080
      READINGLIST_SERVICE_BASEURL: readinglist-service:8081
 
+ front-end-service:
+  depends_on:
+    -api-gateway
+  image: ambervranckx/front-end-service
+  pull_policy: always
+  ports:
+    - 8084:8084
+  links:
+    - api-gateway
+  environment:
+    API_GATEWAY_BASEURL: api-gateway:8083
+
 volumes:
  mongodb_user_data:
  mysql_book_data:
