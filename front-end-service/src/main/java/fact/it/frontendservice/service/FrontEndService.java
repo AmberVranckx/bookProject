@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class FrontEndService {
-    @Value("${api.gateway.url}")
+    @Value("${api.gateway.url:http://localhost:8083}")
     private String apiGatewayUrl;
     private final WebClient.Builder webClientBuilder;
     private final OAuth2AuthorizedClientService authorizedClientService;
@@ -42,7 +42,7 @@ public class FrontEndService {
         System.out.println("Using token: " + token);
         return webClientBuilder.build()
                 .post()
-                .uri(apiGatewayUrl + "books")
+                .uri(apiGatewayUrl + "/books")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(book)
                 .retrieve()
