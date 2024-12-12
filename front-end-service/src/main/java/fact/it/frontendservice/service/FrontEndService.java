@@ -13,6 +13,8 @@ import java.util.List;
 
 @Service
 public class FrontEndService {
+    @Value("${api.gateway.url}")
+    private String apiGatewayUrl;
 
     private final WebClient webClient;
     private final OAuth2AuthorizedClientService authorizedClientService;
@@ -26,7 +28,7 @@ public class FrontEndService {
     public List<Book> getBooks(){
         return webClient
                 .get()
-                .uri("/books")
+                .uri(apiGatewayUrl + "/books")
                 .retrieve()
                 .bodyToFlux(Book.class)
                 .collectList()
@@ -41,7 +43,7 @@ public class FrontEndService {
         System.out.println("Using token: " + token);
         return webClient
                 .post()
-                .uri("/books")
+                .uri( apiGatewayUrl + "/books")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(book)
                 .retrieve()
