@@ -28,7 +28,7 @@ public class FrontEndService {
     public List<Book> getBooks(){
         return webClient
                 .get()
-                .uri(apiGatewayUrl + "/books")
+                .uri("/books")
                 .retrieve()
                 .bodyToFlux(Book.class)
                 .collectList()
@@ -43,7 +43,7 @@ public class FrontEndService {
         System.out.println("Using token: " + token);
         return webClient
                 .post()
-                .uri( apiGatewayUrl + "/books")
+                .uri( "/books")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(book)
                 .retrieve()
