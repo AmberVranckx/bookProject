@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class WebClientConfig {
-    @Value("${api.gateway.url:http://localhost:8083}")
+    @Value("${api.gateway.url}")
     private String apiGatewayUrl;
 
     @Bean
