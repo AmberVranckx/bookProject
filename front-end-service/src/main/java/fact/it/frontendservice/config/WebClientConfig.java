@@ -12,6 +12,6 @@ public class WebClientConfig {
     private String apiGatewayUrl;
 
     @Bean
-    public WebClient webclient() {return WebClient.builder().baseUrl(apiGatewayUrl).build();}
+    public WebClient webclient() {return WebClient.builder().baseUrl("http://" + apiGatewayUrl).build();}
 
 }
