@@ -36,7 +36,6 @@ public class FrontEndController {
     }
 
     @RequestMapping("/createNewBook")
-//    public String createNewBook(HttpServletRequest request, Model model, @AuthenticationPrincipal OAuth2AuthenticationToken authenticationToken){
     public String createNewBook(HttpServletRequest request, Model model){
         String name = request.getParameter("name");
         String author = request.getParameter("author");
@@ -49,14 +48,6 @@ public class FrontEndController {
         book.setAuthor(author);
         book.setDescription(description);
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if(authentication instanceof OAuth2AuthenticationToken){
-//            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-//            frontEndService.createBook(book, oauthToken);
-//        }
-//        else {
-//            System.out.println("ERROR");
-//        }
         frontEndService.createBook(book);
         List<Book> books = frontEndService.getBooks();
         model.addAttribute("books", books);
