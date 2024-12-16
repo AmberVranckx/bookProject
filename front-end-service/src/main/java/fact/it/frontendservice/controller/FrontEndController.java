@@ -18,7 +18,7 @@ import java.util.List;
 public class FrontEndController {
     private final FrontEndService frontEndService;
 
-    public FrontEndController(FrontEndService frontEndService, OAuth2AuthorizedClientService oAuth2AuthorizedClientService){
+    public FrontEndController(FrontEndService frontEndService){
         this.frontEndService = frontEndService;
     }
 
