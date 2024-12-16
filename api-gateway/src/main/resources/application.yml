@@ -24,12 +24,12 @@ spring:
   cloud:
     gateway:
       routes:
-#        - id: frontend-service
-#          uri: http://${FRONTEND_SERVICE_BASEURL:localhost:8084}
-#          predicates:
-#            - Path=/frontend/**
-#          filters:
-#            - RewritePath=/frontend/(?<path>.*), /${path}
+        - id: frontend-service
+          uri: http://${FRONTEND_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/frontend/**
+          filters:
+            - RewritePath=/frontend/(?<path>.*), /${path}
 
 
         - id: book-service-get
