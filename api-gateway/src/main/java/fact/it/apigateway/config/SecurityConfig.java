@@ -24,7 +24,6 @@ public class SecurityConfig {
                                 .authenticated()
                 )
                 .oauth2Login(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
                 );
