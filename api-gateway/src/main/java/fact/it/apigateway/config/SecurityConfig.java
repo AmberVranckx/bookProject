@@ -16,20 +16,33 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
+//    @Bean
+//    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
+//        serverHttpSecurity
+//                .authorizeExchange(exchange ->
+//                        exchange.pathMatchers(HttpMethod.GET,"/books")
+//                                .permitAll()
+//                                .anyExchange()
+//                                .authenticated()
+//                )
+//                .oauth2Login(Customizer.withDefaults())
+//                .oauth2ResourceServer(oauth2 -> oauth2
+//                        .jwt(withDefaults())
+//                );
+//        return serverHttpSecurity.build();
+//    }
+
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
-        serverHttpSecurity
-                .authorizeExchange(exchange ->
-                        exchange.pathMatchers(HttpMethod.GET,"/books")
-                                .permitAll()
-                                .anyExchange()
-                                .authenticated()
-                )
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        return http
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("/").permitAll();
+                    authorizeRequests.requestMatchers("/books").permitAll();
+                    authorizeRequests.anyRequest().authenticated();
+                })
                 .oauth2Login(Customizer.withDefaults())
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(withDefaults())
-                );
-        return serverHttpSecurity.build();
+                .formLogin(Customizer.withDefaults())
+                .build();
     }
 
 }
