@@ -23,7 +23,7 @@ public class FrontEndService {
     public List<Book> getBooks(){
         return webClient
                 .get()
-                .uri(apiGatewayUrl + "/books")
+                .uri("/books")
                 .retrieve()
                 .bodyToFlux(Book.class)
                 .collectList()
@@ -33,7 +33,7 @@ public class FrontEndService {
     public Book createBook(Book book){
         return webClient
                 .post()
-               .uri( apiGatewayUrl + "/books")
+               .uri( "/books")
                 .bodyValue(book)
                 .retrieve()
                 .bodyToMono(Book.class)
