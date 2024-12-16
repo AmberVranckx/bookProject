@@ -2,6 +2,6 @@ body nav {
     background-color: darkblue;
     color: white;
 }
-ul li {
+ul li a{
     color: white;
 }

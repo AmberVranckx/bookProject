@@ -33,7 +33,7 @@ spring:
         - id: frontend-service
           uri: http://${FRONTEND_SERVICE_BASEURL:localhost:8084}
           predicates:
-            - Path=/frontend
+            - Path=/frontend/**
           filters:
             - SetPath=/api/frontend
 
