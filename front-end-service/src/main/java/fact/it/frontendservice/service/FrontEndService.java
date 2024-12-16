@@ -17,11 +17,11 @@ public class FrontEndService {
     private String apiGatewayUrl;
 
     private final WebClient webClient;
-    private final OAuth2AuthorizedClientService authorizedClientService;
+//    private final OAuth2AuthorizedClientService authorizedClientService;
 
-    public FrontEndService(WebClient webClient, OAuth2AuthorizedClientService authorizedClientService){
+    public FrontEndService(WebClient webClient){
         this.webClient = webClient;
-        this.authorizedClientService = authorizedClientService;
+//        this.authorizedClientService = authorizedClientService;
     }
 
 
@@ -35,16 +35,16 @@ public class FrontEndService {
                 .block();
     }
 
-    public Book createBook(Book book, OAuth2AuthenticationToken authentication){
-        OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
-                authentication.getAuthorizedClientRegistrationId(), authentication.getName()
-        );
-        String token = authorizedClient.getAccessToken().getTokenValue();
-        System.out.println("Using token: " + token);
+    public Book createBook(Book book){
+//        OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
+//                authentication.getAuthorizedClientRegistrationId(), authentication.getName()
+//        );
+//        String token = authorizedClient.getAccessToken().getTokenValue();
+//        System.out.println("Using token: " + token);
         return webClient
                 .post()
-                .uri( "/books")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+               .uri( "/books")
+//                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(book)
                 .retrieve()
                 .bodyToMono(Book.class)
