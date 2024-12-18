@@ -101,7 +101,7 @@ services:
   links:
     - api-gateway
   environment:
-  API_GATEWAY_BASEURL: api-gateway:8083
+     API_GATEWAY_BASEURL: api-gateway:8083
 
 volumes:
  mongodb_user_data:
