@@ -26,7 +26,6 @@ public class FrontEndController {
     }
 
     @RequestMapping("/books")
-    @ResponseBody
     public String getBooksPage(Model model){
         List<Book> books = frontEndService.getBooks();
         model.addAttribute("books", books);
