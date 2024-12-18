@@ -1,6 +1,7 @@
 package fact.it.frontendservice.service;
 
 import fact.it.frontendservice.model.Book;
+import fact.it.frontendservice.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,18 @@ public class FrontEndService {
                 .collectList()
                 .block();
     }
+
+    public List<User> getUsers(){
+        return webClient
+                .get()
+                .uri("http://" + apiUrl + "/users")
+                .retrieve()
+                .bodyToFlux(User.class)
+                .collectList()
+                .block();
+    }
+
+
 
     public Book createBook(Book book){
         return webClient

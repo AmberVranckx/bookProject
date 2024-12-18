@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>gebruikerslijst</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a th:href="@{/api/frontend/books}">Boeken</a></li>
+        <li><a th:href="@{/api/frontend/users}">Gebruikers</a></li>
+        <li>Leeslijsten</li>
+    </ul>
+</nav>
+<h1>Gebruikerslijst</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Voornaam</th>
+        <th>Achternaam</th>
+        <th>Email</th>
+        <th>Geboortedatum</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getFirstname()}"></td>
+        <td th:text="${user.getLastname()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.getBirthday()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

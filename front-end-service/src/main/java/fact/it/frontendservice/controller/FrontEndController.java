@@ -1,13 +1,12 @@
 package fact.it.frontendservice.controller;
 
 import fact.it.frontendservice.model.Book;
+import fact.it.frontendservice.model.User;
 import fact.it.frontendservice.service.FrontEndService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -30,6 +29,13 @@ public class FrontEndController {
         List<Book> books = frontEndService.getBooks();
         model.addAttribute("books", books);
         return "getbooks";
+    }
+
+    @RequestMapping("/users")
+    public String getUsersPage(Model model){
+        List<User> users = frontEndService.getUsers();
+        model.addAttribute("users", users);
+        return "getusers";
     }
 
     @RequestMapping("/newBook")
