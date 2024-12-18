@@ -6,6 +6,7 @@ import fact.it.frontendservice.service.FrontEndService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class FrontEndController {
         return "newBook";
     }
 
-    @RequestMapping("/createNewBook")
+    @PostMapping("/createNewBook")
     public String createNewBook(HttpServletRequest request, Model model){
         String name = request.getParameter("name");
         String author = request.getParameter("author");
