@@ -2,13 +2,26 @@
 Naam: Amber Vranckx
 
 ## 1. Thema
-Het thema van mijn project zijn boeken. Ik heb drie entiteiten, namelijk: Book, User en Readinglist. In het eniteit 'Boek', houd ik informatie bij over de boeken, zoals: de naam, de auteur, het isbn-nummer en de beschrijving. In het entiteit 'User', houd ik informatie bij over de gebruikers. Dit bevat onder andere de voornaam, achternaam, het e-mailadres en de geboortedatum. In het laatste entiteit 'Readinglist', houd ik bij welke gebruiker welke boek heeft gelezen en de rating en feedback van de gebruiker voor dit boek.
+Het thema van mijn project is boeken. Ik heb drie microservices, namelijk: book-service, user-service en readinglist-service. In de book-service, houd ik informatie bij over de boeken, zoals: de naam, de auteur, het isbn-nummer en de beschrijving. In de user-service, houd ik informatie bij over de gebruikers. Dit bevat onder andere de voornaam, achternaam, het e-mailadres en de geboortedatum. In de laatste microservice readinglist-service, houd ik bij welke gebruiker welk boek heeft gelezen en de rating en feedback van de gebruiker voor dit boek.
 
-Ik heb dus drie microservices, namelijk: user-service, book-service en readinglist-service. Ik heb ook een api-gateway met security.
+Daarnaast heb ik ook een api-gateway. Deze zorgt voor de routing en de security. Hieronder staat mijn deployment schema. Hier staan al mijn routes op. Ik heb één route die bereikbaar is voor iedereen, namelijk GET /books. Voor de andere routes heeft de gebruiker een authentication token nodig, want mijn api-gateway is geconnecteerd met het Google Cloud Platform OAuth2.
 
 Dit is mijn schema:
 ![Book drawio](https://github.com/user-attachments/assets/f180ad13-6750-4baf-ae6e-c85ae1ed725f)
 
+
+
+
+Na de basisvereisten, heb ik ook geprobeerd om een front-end-service op te zetten. Dit is niet volledig gelukt, maar ik kan wel de boeken opvragen omdat deze route werkt zonder authenticatie. Ik heb ook geprobeerd om een post te doen via de front-end-service, maar dit is niet gelukt omdat ik mijn authenticatie niet in orde heb gekregen. Dit geldt ook voor het opvragen van de users.
+
+Dit is de index-pagina van mijn front-end:
+![front-end index](https://github.com/user-attachments/assets/8ceff329-b51e-449d-aad7-c837cc4cb0a0)
+
+Hier vraag ik al mijn boeken op in mijn front-end:
+![front-end boeken](https://github.com/user-attachments/assets/3a6487dd-2cd1-4dc2-9c3c-427bf8006228)
+
+Ik heb ook geprobeerd om een formulier te maken, zodat ik een nieuwe boek kan toevoegen. Het is niet gelukt om een nieuwe boek toe te voegen, omdat mijn authenticatie van mijn front-end niet werkt.
+![front-end nieuwe boek](https://github.com/user-attachments/assets/7e8f7ca0-0f7f-4342-b957-719332e81728)
 
 
 ## 2. Endpoints
