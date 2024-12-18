@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class FrontEndService {
-    @Value("${api.gateway.url}")
-    private String apiGatewayUrl;
+    @Value("${bookService.baseurl}")
+    private String bookServiceUrl;
 
     private final WebClient webClient;
 
@@ -23,7 +23,7 @@ public class FrontEndService {
     public List<Book> getBooks(){
         return webClient
                 .get()
-                .uri("/books")
+                .uri("http://" + bookServiceUrl + "/api/book")
                 .retrieve()
                 .bodyToFlux(Book.class)
                 .collectList()
@@ -33,7 +33,7 @@ public class FrontEndService {
     public Book createBook(Book book){
         return webClient
                 .post()
-               .uri( "/books")
+               .uri( "http://" + bookServiceUrl + "/api/book")
                 .bodyValue(book)
                 .retrieve()
                 .bodyToMono(Book.class)

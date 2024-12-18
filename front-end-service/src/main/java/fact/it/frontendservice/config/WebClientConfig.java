@@ -8,10 +8,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class WebClientConfig {
-    @Value("${api.gateway.url}")
-    private String apiGatewayUrl;
 
     @Bean
-    public WebClient webclient() {return WebClient.builder().baseUrl("http://" + apiGatewayUrl).build();}
+    public WebClient webclient() {return WebClient.builder().build();}
 
 }
