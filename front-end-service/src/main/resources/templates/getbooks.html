@@ -7,14 +7,14 @@
 <body>
 <nav>
     <ul>
-        <li><a href="/books">Boeken</a></li>
+        <li><a th:href="@{/api/frontend/books}">Boeken</a></li>
         <li>Gebruikers</li>
         <li>Leeslijsten</li>
         <li>Profiel</li>
     </ul>
 </nav>
     <h1>Boekenlijst</h1>
-<p><a href="/newBook">Nieuwe Boek</a></p>
+<p><a th:href="@{/api/frontend/newBook}">Nieuwe Boek</a></p>
     <table border="1">
         <thead>
             <tr>
