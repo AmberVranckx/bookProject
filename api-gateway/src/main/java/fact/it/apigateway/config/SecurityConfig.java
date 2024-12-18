@@ -22,6 +22,8 @@ public class SecurityConfig {
                 .authorizeExchange(exchange ->
                         exchange.pathMatchers(HttpMethod.GET,"/books")
                                 .permitAll()
+                                .pathMatchers(HttpMethod.GET, "/users")
+                                .authenticated()
                                 .anyExchange()
                                 .authenticated()
                 )
