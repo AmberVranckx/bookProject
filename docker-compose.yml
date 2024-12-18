@@ -101,7 +101,7 @@ services:
   links:
     - api-gateway
   environment:
-   BOOK_SERVICE_BASEURL: book-service:8082
+  API_GATEWAY_BASEURL: api-gateway:8083
 
 volumes:
  mongodb_user_data:
