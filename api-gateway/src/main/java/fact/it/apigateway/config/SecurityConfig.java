@@ -22,12 +22,10 @@ public class SecurityConfig {
                 .authorizeExchange(exchange ->
                         exchange.pathMatchers(HttpMethod.GET,"/books")
                                 .permitAll()
-                                .pathMatchers(HttpMethod.GET, "/users")
-                                .authenticated()
                                 .anyExchange()
                                 .authenticated()
                 )
-                .oauth2Login(withDefaults())
+//                .oauth2Login(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
                 );

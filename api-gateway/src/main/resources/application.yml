@@ -17,12 +17,6 @@ spring:
             client-id: ${GOOGLE_CLIENTID}
             client-secret: ${GOOGLE_CLIENTSECRET}
             scope: openid,profile,email
-            redirect-uri: http://localhost:8083/login/oauth2/code/google
-#        provider:
-#          google:
-#            authorization-uri: https://accounts.google.com/o/oauth2/auth
-#            token-uri: https://oauth2.googleapis.com/token
-#            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
       resourceserver:
         jwt:
           issuer-uri: https://accounts.google.com
@@ -53,7 +47,6 @@ spring:
             - Method=POST
           filters:
             - SetPath=/api/book
-#            - RemoveRequestHeader=Cookie
 
         - id: book-service-put
           uri: http://${BOOK_SERVICE_BASEURL:localhost:8082}
