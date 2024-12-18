@@ -45,7 +45,7 @@ public class FrontEndController {
         return "newBook";
     }
 
-    @GetMapping("/createNewBook")
+    @RequestMapping("/createNewBook")
     public String createNewBook(HttpServletRequest request, Model model){
         String name = request.getParameter("name");
         String author = request.getParameter("author");
