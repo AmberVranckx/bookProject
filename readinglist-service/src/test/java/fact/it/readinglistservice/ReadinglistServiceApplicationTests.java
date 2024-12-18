@@ -119,7 +119,7 @@ class ReadinglistServiceApplicationTests {
 		ReadingList readingList1 = new ReadingList(1L, "1", "1",Arrays.asList(readingListLine1, readingListLine2));
 
 		ReadingListLine readingListLine3 = new ReadingListLine(3L, 2L, 5, "Very good");
-		ReadingListLine readingListLine4 = new ReadingListLine(4L, 3L, 2, "Not good");
+		ReadingListLine readingListLine4 = new ReadingListLine(4L, 1L, 2, "Not good");
 
 		ReadingList readingList2 = new ReadingList(2L, "2", "2",Arrays.asList(readingListLine3, readingListLine4));
 
@@ -142,6 +142,24 @@ class ReadinglistServiceApplicationTests {
 
 		//Assert
 		assertEquals(2, result.size());
+		assertEquals("1", result.get(0).getReadingListNumber());
+		assertEquals("Test one", result.get(0).getUsername());
+		assertEquals("1",result.get(0).getUserId());
+		assertEquals(1L,result.get(0).getReadingListLines().get(0).getBookId());
+		assertEquals(5,result.get(0).getReadingListLines().get(0).getRating());
+		assertEquals("Good",result.get(0).getReadingListLines().get(0).getFeedback());
+		assertEquals("book one",result.get(0).getReadingListLines().get(0).getBookname());
+		assertEquals(1L,result.get(0).getReadingListLines().get(0).getId());
+
+		assertEquals("2", result.get(1).getReadingListNumber());
+		assertEquals("Test Two", result.get(1).getUsername());
+		assertEquals("2",result.get(1).getUserId());
+		assertEquals(2L,result.get(1).getReadingListLines().get(0).getBookId());
+		assertEquals(5,result.get(1).getReadingListLines().get(0).getRating());
+		assertEquals("Very good",result.get(1).getReadingListLines().get(0).getFeedback());
+		assertEquals("book two",result.get(1).getReadingListLines().get(0).getBookname());
+		assertEquals(3L,result.get(1).getReadingListLines().get(0).getId());
+
 		verify(readingListRepository, times(1)).findAll();
 
 	}
