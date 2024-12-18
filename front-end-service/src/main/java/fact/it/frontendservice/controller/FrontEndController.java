@@ -25,19 +25,19 @@ public class FrontEndController {
         return "index";
     }
 
-    @RequestMapping("/api/frontend/books")
+    @RequestMapping("/books")
     public String getBooksPage(Model model){
         List<Book> books = frontEndService.getBooks();
         model.addAttribute("books", books);
         return "getbooks";
     }
 
-    @RequestMapping("/api/frontend/newBook")
+    @RequestMapping("/newBook")
     public String newBook(){
         return "newBook";
     }
 
-    @RequestMapping("/api/frontend/createNewBook")
+    @RequestMapping("/createNewBook")
     public String createNewBook(HttpServletRequest request, Model model){
         String name = request.getParameter("name");
         String author = request.getParameter("author");
