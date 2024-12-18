@@ -5,6 +5,7 @@ import fact.it.frontendservice.service.FrontEndService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,10 +25,11 @@ public class FrontEndController {
     }
 
     @RequestMapping("/books")
+    @ResponseBody
     public String getBooksPage(Model model){
         List<Book> books = frontEndService.getBooks();
         model.addAttribute("books", books);
-        return "books";
+        return "getbooks";
     }
 
     @RequestMapping("/newBook")
@@ -52,7 +54,7 @@ public class FrontEndController {
         List<Book> books = frontEndService.getBooks();
         model.addAttribute("books", books);
 
-        return "/books";
+        return "getbooks";
     }
 
 
